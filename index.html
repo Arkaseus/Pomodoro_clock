@@ -1,0 +1,333 @@
+<html>
+    <head><title>Pomodoro-Clock</title>
+
+    </head>
+   <style>*{
+    margin:0;
+    padding:0;
+}
+.container{
+    display: flex;
+    justify-content: center;
+   align-items: center; 
+   height: 100%;
+   background: linear-gradient(to right,#6a89cc,#82ccdd);
+}
+
+.main{
+    background-color: rgb(19, 34, 53);
+    height:510px;
+    width:240px;
+    box-shadow: -1px -2px 40px rgb(255, 255, 255);
+    display:flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 2%;
+}
+#upper{
+    background: linear-gradient(to right,#0187d4,#0187d4);
+    width:91%;
+    height:100%;
+    padding: 10px;
+    border-radius: 2%;
+}
+#u{
+    background-color: whitesmoke;
+    width:100%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.lower{
+    background-color:bisque;
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+
+
+}
+.l1{
+    background-color: rgb(19, 34, 53);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25%;
+    width: 100%;
+
+    font-size: 30px;
+    color:aliceblue;
+}
+
+.l2{
+    background-color: rgb(19, 34, 53);
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+    height: 45%;
+    width: 100%;
+    border-top: 2px dashed rgb(53, 172, 252);
+    border-bottom: 2px dashed  rgb(53, 172, 252);
+}
+.left2{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items:center;
+    height: 80%;
+    width: 50%;
+}
+.right2{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items:center;
+    height: 80%;
+    width: 50%;
+}
+.l3{
+    background-color: rgb(19, 34, 53);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 30%;
+    width: 100%;
+}
+</style>
+    <body>
+
+<div class="container">
+
+    <div class="main">
+        <div id="upper">
+
+            <div style="font-size: 60px; font-weight: 800; letter-spacing: .8px;"id="u">
+                00:00
+            </div>
+            
+
+        </div>
+        <div class="lower" >
+         
+            <div id="session" class="l1">
+               Session 1
+            </div>
+            <div class="l2">
+
+                <div class="left2">
+                      <h5 style="color: white; letter-spacing: .4px;margin-top: 5px;">Session time</h5>
+                      <h3 id="sid" style="color:#f3f72a; letter-spacing: .4px;margin-top: 5px;">1 min</h3>
+                      <div class="btn2">
+                        <button style="width: 33px; height: 30;color: white; background-color: rgb(50, 40, 184);font-size: 25px; margin-top: 10px;cursor:pointer; border-color:rgb(67, 105, 153);margin-right: 3px;" type="button" id="btn1" onclick="sdown()"> - </button>
+                        <button style="width: 33px; height: 30;color: white; background-color: rgb(50, 40, 184);font-size: 25px; margin-top: 10px;cursor:pointer; border-color:rgb(67, 105, 153);" type="button" id="btn2" onclick="sup()"> + </button>
+                      </div>
+
+                </div>
+    
+                    <div class="right2">
+                        <h5 style="color: white; letter-spacing: .4px;margin-top: 5px;">Break time</h5>
+                        <h3 id="bid" style="color:#17f82a; letter-spacing: .4px; margin-top: 5px;">0 min</h3>
+                        <div class="btn2">
+                            <button style="width: 33px; height: 30;color: white; background-color: rgb(50, 40, 184);font-size: 25px; margin-top: 10px; cursor:pointer; border-color:rgb(67, 105, 153);" type="button" id="btn3" onclick="bdown()"> - </button>
+                            <button style="width: 33px; height: 30;color: white; background-color: rgb(50, 40, 184);font-size: 25px; margin-top: 10px; cursor:pointer; border-color:rgb(67, 105, 153);margin-left: 3px;" type="button" id="btn4" onclick="bup()"> + </button>
+                        </div>
+
+                    </div>
+
+            </div>
+            <div class="l3">
+
+               <button onclick="reset()" style="width: 80px; height: 40px;font-size: 20px; color: white; background-color: rgb(50, 40, 184);cursor:pointer; border-color:rgb(67, 105, 153);" type="button">Reset</button>
+               <button id="btnstart" onclick="start()" style="width: 80px; height: 40px;font-size: 20px; color: white; background-color: rgb(50, 40, 184);cursor:pointer;border-color:rgb(67, 105, 153);" type="button"> Start</button>
+
+            </div>
+        
+        </div>
+
+    </div>
+
+
+</div>
+
+
+    </body>
+
+    <script>let mm=0,ss=0;
+let strmm="00",strss="00";
+
+let bmm=0,bss=0;
+let stime=1,btime=0;
+let iid,iid2;
+let session=0;
+let breakc=0;
+let flag=1;
+
+function start()
+{   
+        mm=stime;
+        ss=0;
+        iid=setInterval(counter,100);
+        
+        if(stime>0)
+        { 
+            flag=1;
+            document.getElementById("upper").style="background: linear-gradient(to right,#dce926,#0187d4)";
+            document.getElementById("session").style="color:yellow";
+            session++;
+            document.getElementById("session").innerHTML=`Session ${session}`
+             
+        }        
+    
+       document.getElementById("btnstart").innerHTML="Pause";
+       document.getElementById("btnstart").setAttribute("onclick","pause()");
+
+       deactive_btn();
+}
+
+function resume(){
+    if(flag==2)
+    {
+       iid2=setInterval(counter2,100);
+
+    }
+    else{
+       iid=setInterval(counter,100);
+    } 
+
+    document.getElementById("btnstart").innerHTML="Pause";
+    document.getElementById("btnstart").setAttribute("onclick","pause()");
+
+}
+function pause(){
+
+    clearInterval(iid);
+    clearInterval(iid2);
+    
+        document.getElementById("btnstart").innerHTML="Start";
+        document.getElementById("btnstart").setAttribute("onclick","resume()");
+    
+    }
+
+function counter()
+{ 
+    if(mm!=0 || ss>=0)
+    { 
+        if(mm>0 && ss==0)
+        {
+            ss=59;
+            mm--;
+        }
+      
+        strss=(ss<10)? '0'+ss : ss;
+        strmm=(mm<10)? '0'+mm : mm;
+
+        document.getElementById("u").innerHTML=`${strmm}:${strss}`;
+        ss--;
+    }
+    else{
+         clearInterval(iid);
+
+          mm=btime;
+          ss=0;
+          if(btime>0)
+          {  flag=2;
+             breakc++;
+             document.getElementById("upper").style="background: linear-gradient(to right,#0187d4,#17f82a)";
+             document.getElementById("session").style="color:#17f82a";
+             document.getElementById("session").innerHTML=`Break ${breakc}`
+          }
+          iid2=setInterval(counter2,100);
+        } 
+}
+
+function counter2(){
+    
+    if(mm!=0 || ss>=0)
+    {  
+    
+        if(mm>0 && ss==0)
+        {
+            ss=59;
+            mm--;
+        }
+    
+        strss=(ss<10)? '0'+ss : ss;
+        strmm=(mm<10)? '0'+mm : mm;
+
+        document.getElementById("u").innerHTML=`${strmm}:${strss}`;
+
+        ss--;
+    }
+    else
+    {
+        clearInterval(iid2);
+        start();
+    }
+
+}
+
+function sup(){
+    stime++;
+    document.getElementById("sid").innerHTML=`${stime} min`;
+}
+function sdown(){
+    if(stime>1)
+    { stime--;
+     document.getElementById("sid").innerHTML=`${stime} min`;
+    }
+}
+
+function bup(){
+    btime++;
+    document.getElementById("bid").innerHTML=`${btime} min`;
+}
+function bdown(){
+    if(btime>0)
+    { btime--;
+     document.getElementById("bid").innerHTML=`${btime} min`;
+    }
+}
+
+
+
+function reset()
+{
+    mm=0;
+    ss=0;
+    session=0;
+    breakc=0;
+    document.getElementById("upper").style="background: linear-gradient(to right,#0187d4,#0187d4)";
+    document.getElementById("session").innerHTML=`Session ${session}`
+    clearInterval(iid);
+    clearInterval(iid2);
+    document.getElementById("u").innerHTML="00:00";
+
+    document.getElementById("btnstart").innerHTML="Start";
+    document.getElementById("btnstart").setAttribute("onclick","start()");
+
+    active_btn();
+
+}
+
+function active_btn(){
+
+    document.getElementById("btn1").setAttribute("onclick","sdown()");
+    document.getElementById("btn2").setAttribute("onclick","sup()");
+ 
+    document.getElementById("btn3").setAttribute("onclick","bdown()");
+    document.getElementById("btn4").setAttribute("onclick","bup()");
+ 
+}
+
+function deactive_btn(){
+
+    document.getElementById("btn1").setAttribute("onclick","");
+    document.getElementById("btn2").setAttribute("onclick","");
+ 
+    document.getElementById("btn3").setAttribute("onclick","");
+    document.getElementById("btn4").setAttribute("onclick","");
+}</script>
+</html>
